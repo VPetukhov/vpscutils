@@ -1,0 +1,12 @@
+Package: vpscutils
+Type: Package
+Title: VP SC Utils
+Version: 0.1.0
+Authors@R: person("Viktor", "Petukhov", email = "viktor.s.petuhov@ya.ru", role = c("aut", "cre"))
+Description: SC Util functions
+License: MIT
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.0.2
+Imports: 
+    Matrix
