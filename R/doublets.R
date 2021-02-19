@@ -16,13 +16,16 @@ PredictGeneLimits <- function(cm, verbose=T, min.quant=0.15, max.quant=0.85) {
 }
 
 #' @export
-GetScrubletScores <- function(mat, min.molecules.per.gene=10) {
+GetScrubletScores <- function(mat, min.molecules.per.gene=10, py.path=NULL) {
+  if (is.null(py.path)) {
+    py.path <- "/d0-mendel/home/viktor_petukhov/local/anaconda3/bin/python3.7"
+  }
   tf.in <- tempfile()
   tf.out <- tempfile()
   dt <- mat[Matrix::rowSums(mat)>=min.molecules.per.gene,] %>% Matrix::t() %>% as.matrix() %>% data.table::data.table()
   data.table::fwrite(dt, file=tf.in)
 
-  cmd <- paste0("/d0-mendel/home/viktor_petukhov/local/anaconda3/bin/python3.7 -c 'import sys; import pandas; import scrublet; ",
+  cmd <- paste0(py.path, " -c 'import sys; import pandas; import scrublet; ",
                 "df = pandas.read_csv(\"", tf.in, "\"); scrub = scrublet.Scrublet(df); ",
                 "doublet_scores, predicted_doublets = scrub.scrub_doublets();",
                 "pandas.DataFrame(dict(score=doublet_scores, is_doublet=predicted_doublets)).to_csv(\"",tf.out,"\");'",
