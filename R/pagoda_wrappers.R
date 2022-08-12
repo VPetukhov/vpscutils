@@ -112,7 +112,7 @@ GetConos <- function (p2s, annotations = NULL, k = 30, k.self = 10, cluster.reso
 {
   con <- conos::Conos$new(p2s, n.cores = n.cores)
   con$buildGraph(base.groups=annotations, ...)
-  con$findCommunities(method=conos::leiden.community, resolution=cluster.resolution)
-  con$embedGraph(method=embedding.method, verbose=F, n.cores = n.cores, min.dist=min.dist, spread=spread)
+  con$findCommunities(method=leidenAlg::leiden.community, resolution=cluster.resolution)
+  con$embedGraph(method=embedding.method, verbose=FALSE, min.dist=min.dist, spread=spread)
   return(con)
 }
